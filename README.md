@@ -10,3 +10,5 @@
 
 - 10/7 - Local images added
 - 10/8 - Sign in component built, custom button
+- 10/12 - Sign-in & Sign Up completed
+- 10/13 - Redux Started
