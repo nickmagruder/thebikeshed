@@ -184,6 +184,7 @@ const SHOP_DATA = {
       {
         id: 27,
         name: 'Striped Sweater',
+        imageUrl: '/images/shop-img/womens/striped-sweater.png',
         price: 45
       },
       {
