@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "12.19.0"
+    "node": "12.19.0",
+    "npm": "7.20.5"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.6.0",
