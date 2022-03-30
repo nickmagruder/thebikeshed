@@ -1,37 +1,37 @@
 const INITIAL_STATE = {
   sections: [
     {
-      title: 'hats',
-      imageUrl: 'images/hats.png',
+      title: 'bags',
+      imageUrl: 'images/bags.png',
       id: 1,
-      linkUrl: 'shop/hats'
+      linkUrl: 'shop/bags'
 
     },
     {
-      title: 'jackets',
-      imageUrl: 'images/jackets.png',
+      title: 'apparel',
+      imageUrl: 'images/apparel.png',
       id: 2,
-      linkUrl: 'shop/jackets'
+      linkUrl: 'shop/apparel'
     },
     {
-      title: 'sneakers',
-      imageUrl: 'images/sneakers.png',
+      title: 'accessories',
+      imageUrl: 'images/accessories.png',
       id: 3,
-      linkUrl: 'shop/sneakers'
+      linkUrl: 'shop/accessories'
     },
     {
-      title: 'womens',
-      imageUrl: 'images/womens.png',
+      title: 'city bikes',
+      imageUrl: 'images/city.png',
       size: 'large',
       id: 4,
-      linkUrl: 'shop/womens'
+      linkUrl: 'shop/city'
     },
     {
-      title: 'mens',
-      imageUrl: 'images/men.png',
+      title: 'adventure bikes',
+      imageUrl: 'images/adventure.png',
       size: 'large',
       id: 5,
-      linkUrl: 'shop/mens'
+      linkUrl: 'shop/adventure'
     }
   ]
 };
