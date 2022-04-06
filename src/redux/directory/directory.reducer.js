@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     },
     {
       title: 'apparel',
-      imageUrl: 'images/apparel.png',
+      imageUrl: 'images/apparel.jpg',
       id: 2,
       linkUrl: 'shop/apparel'
     },
@@ -20,14 +20,14 @@ const INITIAL_STATE = {
       linkUrl: 'shop/accessories'
     },
     {
-      title: 'city bikes',
+      title: 'city',
       imageUrl: 'images/city.png',
       size: 'large',
       id: 4,
       linkUrl: 'shop/city'
     },
     {
-      title: 'adventure bikes',
+      title: 'adventure',
       imageUrl: 'images/adventure.png',
       size: 'large',
       id: 5,

@@ -10,6 +10,8 @@ const CollectionItem = ({ item, addItem }) => {
 
   const { id, name, imageUrl, price } = item;
 
+  console.log(item);
+
   return (
     <div key={id} className='collection-item'>
       <div
