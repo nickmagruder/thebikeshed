@@ -22,3 +22,6 @@
 - 10/8 - Sign in component built, custom button
 - 10/12 - Sign-in & Sign Up completed
 - 10/13 - Redux Started
+
+### 2025
+- 9/9 - Added comprehensive documentation comments to component files (checkout, collection, homepage, shop, and sign-in-and-up components)
