@@ -2,15 +2,29 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
+/**
+ * Firebase configuration object
+ * Uses environment variables to store sensitive information
+ * These variables are defined in the .env.development file at the project root
+ */
 const config = {
-  apiKey: 'AIzaSyCeKqROIx8D_4QEgX7_hbrDm7hQyF6LUIk',
-  authDomain: 'ecommerce-42edc.firebaseapp.com',
-  projectId: 'ecommerce-42edc',
-  storageBucket: 'ecommerce-42edc.appspot.com',
-  messagingSenderId: '512686136384',
-  appId: '1:512686136384:web:83da25193915832d6493a5',
-  measurementId: 'G-6HYR1JLW1L',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
+
+// Check if Firebase configuration is properly loaded from environment variables
+if (!process.env.REACT_APP_FIREBASE_API_KEY) {
+  console.error(
+    'Firebase configuration is missing. Make sure your environment variables are set up correctly. ' +
+    'In development, check your .env.development file. ' +
+    'In production on Heroku, check your config vars.'
+  );
+}
 
 firebase.initializeApp(config);
 
