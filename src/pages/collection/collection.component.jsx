@@ -4,8 +4,8 @@
  * This component renders a specific collection of products based on the URL parameter.
  * It displays the collection title and a grid of product items for that collection.
  */
-import React from 'react';
 import { connect } from 'react-redux'; // For connecting component to Redux store
+import { useParams } from 'react-router-dom'; // For accessing URL parameters
 
 // Component that renders individual product items
 import CollectionItem from '../../components/collection-item/collection-item.component';
@@ -43,20 +43,32 @@ const CollectionPage = ({ collection }) => {
 };
 
 /**
+ * CollectionPageContainer - Wrapper component to provide URL parameters
+ * This pattern is needed for React Router v6 since it doesn't pass match props
+ */
+const CollectionPageContainer = (props) => {
+  const { collectionId } = useParams();
+  return <CollectionPageWithRouter collectionId={collectionId} {...props} />;
+};
+
+/**
  * mapStateToProps function
  *
  * Maps Redux state to component props and uses the URL parameter to determine
  * which collection to retrieve from the store.
  *
  * @param {Object} state - The Redux store state
- * @param {Object} ownProps - Props passed to the component including router props
+ * @param {Object} ownProps - Props passed to the component including collectionId
  * @returns {Object} Props object containing the collection
  */
 const mapStateToProps = (state, ownProps) => ({
   // selectCollection returns a curried function that takes the state as a parameter
-  // ownProps.match.params.collectionId comes from the URL parameter in the route
-  collection: selectCollection(ownProps.match.params.collectionId)(state),
+  // collectionId comes from the wrapper component
+  collection: selectCollection(ownProps.collectionId)(state),
 });
 
 // Connect the CollectionPage component to Redux store
-export default connect(mapStateToProps)(CollectionPage);
+const CollectionPageWithRouter = connect(mapStateToProps)(CollectionPage);
+
+// Export the container component that includes the router params
+export default CollectionPageContainer;

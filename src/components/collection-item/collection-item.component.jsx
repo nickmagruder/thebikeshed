@@ -8,12 +8,10 @@ import './collection-item.styles.scss';
 
 const CollectionItem = ({ item, addItem }) => {
 
-  const { id, name, imageUrl, price } = item;
-
-  console.log(item);
+  const { name, imageUrl, price } = item;
 
   return (
-    <div key={id} className='collection-item'>
+    <div className='collection-item'>
       <div
         className='image'
         style={{
@@ -26,7 +24,7 @@ const CollectionItem = ({ item, addItem }) => {
         <span className='price'>{price}</span>
 
       </div>
-      <CustomButton onClick={() => addItem(item)} inverted> Add to Cart </CustomButton>
+      <CustomButton onClick={() => addItem(item)}> Add to Cart </CustomButton>
     </div>
   )
 };

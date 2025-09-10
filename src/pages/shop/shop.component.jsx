@@ -3,17 +3,12 @@
  *
  * This component handles the shop section of the application, including:
  * - Fetching collection data from Firestore
- * - Routing between collections overview and individual collection pages
+ * - Passing loading state to child routes via Outlet context
  * - Loading states while data is being fetched
  */
 import React from 'react';
-import { Route } from 'react-router-dom'; // For routing within the shop page
+import { Outlet } from 'react-router-dom'; // For routing within the shop page
 import { connect } from 'react-redux'; // For connecting component to Redux store
-
-// Component imports
-import CollectionsOverview from '../../components/collections-overview/collections-overview.component'; // Overview of all collections
-import CollectionPage from '../collection/collection.component'; // Page for a single collection
-import WithSpinner from '../../components/with-spinner/with-spinner.component'; // HOC for loading state
 
 // Action creator to update collections in Redux store
 import { updateCollections } from '../../redux/shop/shop.actions';
@@ -23,10 +18,6 @@ import {
   firestore,
   convertCollectionsSnapshotToMap,
 } from '../../firebase/firebase.utils';
-
-// Wrap components with WithSpinner HOC to show loading indicator
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 /**
  * ShopPage class component
@@ -70,25 +61,10 @@ class ShopPage extends React.Component {
    * @returns {JSX.Element} - Rendered shop page with routes
    */
   render() {
-    const { match } = this.props; // match comes from react-router
     const { loading } = this.state; // loading state determines whether to show spinner
     return (
       <div className="shop-page">
-        {/* Route for collections overview (main shop page) */}
-        <Route
-          exact
-          path={`${match.path}`}
-          render={(props) => (
-            <CollectionsOverviewWithSpinner isLoading={loading} {...props} />
-          )}
-        />
-        {/* Route for individual collection pages with URL parameter */}
-        <Route
-          path={`${match.path}/:collectionId`}
-          render={(props) => (
-            <CollectionPageWithSpinner isLoading={loading} {...props} />
-          )}
-        />
+        <Outlet context={{ loading }} />
       </div>
     );
   }
