@@ -29,19 +29,22 @@ cp .env.example .env.development
 npm start
 ```
 
-### Production Deployment on Heroku-24 with Nginx
+### Production Deployment on Heroku-24 with Express
 
-This project is configured for deployment on Heroku-24 stack using the Nginx buildpack, which provides improved performance, security headers, and enhanced routing:
+This project is configured for deployment on Heroku-24 stack using an Express server for production, which provides:
+- Static file serving with compression
+- Security headers for enhanced protection
+- HTTPS enforcement
+- SPA routing support (redirect all routes to index.html)
 
 1. Create a new Heroku app with the Heroku-24 stack:
 ```bash
 heroku create your-app-name --stack heroku-24
 ```
 
-2. Add the Nginx buildpack to your Heroku app:
+2. Add the Node.js buildpack to your Heroku app:
 ```bash
 heroku buildpacks:add heroku/nodejs
-heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nginx
 ```
 
 3. Set your Firebase configuration as Heroku config vars:
@@ -66,19 +69,20 @@ heroku config:set REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
 git push heroku main
 ```
 
-#### Nginx Configuration
+#### Express Server Configuration
 
-The application uses a `static.json` file to configure Nginx:
+The application uses a custom Express server (`server.js`) for production:
 - Routes all requests to index.html for single page app functionality
-- Enforces HTTPS for all connections
+- Implements compression for faster loading
+- Enforces HTTPS for all connections with express-sslify
 - Sets security headers (Content-Security-Policy, X-Frame-Options, etc.)
-- Enables clean URLs without .html extensions
+- Serves static files from the build directory
 
 #### Important Notes for Heroku-24
 
 - Heroku-24 requires Node.js 20 or newer (our package.json is configured for this)
 - The application uses the `heroku-postbuild` script to build the React app
-- The Procfile is set to use `bin/start-nginx-static` from the Nginx buildpack
+- The Procfile is set to use `npm run serve` which starts the Express server
 - Config vars can be updated without redeploying the application
 - Config vars are automatically available as environment variables to your application
 - Use `heroku logs --tail` to monitor your application and check for any environment variable issues
@@ -120,7 +124,7 @@ The application uses a `static.json` file to configure Nginx:
 - 9/9 - Updated deployment configuration for Heroku with config vars
 - 9/9 - Updated all npm packages to latest versions (React 18, Redux 5, Firebase 10, and more)
 - 9/10 - Updated React Router from v6 to v7 with Data Router API
-- 9/10 - Implemented Heroku Nginx buildpack with security headers and optimized configuration
+- 9/10 - Implemented Express server for Heroku with security headers and optimized configuration
 
 ## 9/10 Package Update Summary
 
@@ -160,11 +164,11 @@ We have successfully updated and migrated the ecommerce application to use newer
 
 ### 3. Heroku Configuration
 
-- Implemented Nginx buildpack for improved performance and security
-- Added static.json file with security headers and SPA routing
-- Updated Procfile to use Nginx for serving static assets
+- Implemented Express server for improved performance and security
+- Created server.js with compression, security headers, and SPA routing
+- Updated Procfile to use Express for serving static assets
 - Configured Content-Security-Policy and other security headers
-- Enforced HTTPS connections
+- Enforced HTTPS connections with express-sslify
 
 ### 4. Additional Changes
 
