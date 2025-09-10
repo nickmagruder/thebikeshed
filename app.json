@@ -1,0 +1,48 @@
+{
+  "name": "E-Commerce React App",
+  "description": "A modern e-commerce web application built with React, Redux, and Firebase",
+  "repository": "https://github.com/nickmagruder/ecommerce",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["react", "redux", "firebase", "e-commerce", "node", "heroku", "nginx"],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nginx"
+    }
+  ],
+  "env": {
+    "REACT_APP_FIREBASE_API_KEY": {
+      "description": "Firebase API key",
+      "required": true
+    },
+    "REACT_APP_FIREBASE_AUTH_DOMAIN": {
+      "description": "Firebase Auth domain",
+      "required": true
+    },
+    "REACT_APP_FIREBASE_PROJECT_ID": {
+      "description": "Firebase project ID",
+      "required": true
+    },
+    "REACT_APP_FIREBASE_STORAGE_BUCKET": {
+      "description": "Firebase storage bucket",
+      "required": true
+    },
+    "REACT_APP_FIREBASE_MESSAGING_SENDER_ID": {
+      "description": "Firebase messaging sender ID",
+      "required": true
+    },
+    "REACT_APP_FIREBASE_APP_ID": {
+      "description": "Firebase app ID",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  },
+  "stack": "heroku-24"
+}

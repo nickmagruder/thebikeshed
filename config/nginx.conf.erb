@@ -1,0 +1,26 @@
+# Custom nginx configuration for ecommerce app
+# This file provides additional configuration on top of the settings in static.json
+
+# Enable gzip compression for better performance
+gzip on;
+gzip_comp_level 6;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types
+  text/plain
+  text/css
+  text/javascript
+  application/javascript
+  application/json
+  application/xml
+  image/svg+xml;
+
+# Set browser caching for static assets
+location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+  expires 30d;
+  add_header Cache-Control "public, no-transform";
+}
+
+# Disable logging for favicons and robots.txt
+location = /favicon.ico { access_log off; log_not_found off; }
+location = /robots.txt { access_log off; log_not_found off; }
