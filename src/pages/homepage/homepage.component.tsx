@@ -4,7 +4,7 @@
  * The main landing page of the application that displays a directory
  * of product categories for users to browse.
  */
-import React from 'react';
+import { FC } from 'react';
 
 // Component that renders the menu of product categories
 import Directory from '../../components/directory/directory.component';
@@ -17,10 +17,8 @@ import { HomePageContainer } from './homepage.styles';
  *
  * A simple functional component that renders the Directory component
  * inside a styled container.
- *
- * @returns {JSX.Element} - Rendered homepage
  */
-const HomePage = () => (
+const HomePage: FC = () => (
   <HomePageContainer>
     {/* Directory component displaying category menu items */}
     <Directory />
