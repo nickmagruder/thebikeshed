@@ -1,16 +1,55 @@
-import { store } from '../redux/store';
+// State types for each reducer
+export interface UserState {
+  currentUser: User | null;
+}
+
+export interface CartState {
+  hidden: boolean;
+  cartItems: CartItem[];
+}
+
+export interface DirectoryState {
+  sections: Section[];
+}
+
+export interface ShopState {
+  collections: any;
+}
+
+// Combined root state type
+export interface RootState {
+  user: UserState;
+  cart: CartState;
+  directory: DirectoryState;
+  shop: ShopState;
+}
 
 /**
- * RootState type - inferred from the store
- * Use this for typed Redux selectors
+ * AppDispatch type - for typed dispatch functions
  */
-export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = (action: any) => any;
 
 /**
- * AppDispatch type - inferred from the store
- * Use this for typed dispatch actions
+ * Cart item interface
  */
-export type AppDispatch = typeof store.dispatch;
+export interface CartItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+}
+
+/**
+ * Directory section interface
+ */
+export interface Section {
+  title: string;
+  imageUrl: string;
+  id: number;
+  linkUrl: string;
+  size?: string;
+}
 
 /**
  * User type from Firebase user object
