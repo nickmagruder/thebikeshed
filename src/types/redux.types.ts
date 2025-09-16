@@ -13,7 +13,7 @@ export interface DirectoryState {
 }
 
 export interface ShopState {
-  collections: any;
+  collections: { [key: string]: any } | null;
 }
 
 // Combined root state type

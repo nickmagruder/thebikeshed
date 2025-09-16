@@ -1,4 +1,4 @@
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 import { persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -15,7 +15,7 @@ import { RootState } from '../types/redux.types';
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage,
-  whitelist: ['cart'] // Only cart data will be persisted
+  whitelist: ['cart'], // Only cart data will be persisted
 };
 
 /**
@@ -23,10 +23,11 @@ const persistConfig: PersistConfig<RootState> = {
  * Each reducer handles a specific slice of the state
  */
 const rootReducer = combineReducers({
-  user: userReducer as Reducer<RootState['user']>,
-  cart: cartReducer as Reducer<RootState['cart']>,
-  directory: directoryReducer as Reducer<RootState['directory']>,
-  shop: shopReducer as Reducer<RootState['shop']>
+  user: userReducer,
+  cart: cartReducer,
+  directory: directoryReducer,
+  shop: shopReducer,
 });
 
-export default persistReducer<RootState>(persistConfig, rootReducer);
+// Cast rootReducer to any to avoid type errors in persistReducer
+export default persistReducer(persistConfig, rootReducer as any);

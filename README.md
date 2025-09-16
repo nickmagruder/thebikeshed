@@ -58,6 +58,7 @@ npm start
 - 9/10 - Implemented Heroku Nginx buildpack with security headers and optimized configuration
 - 9/11 - Converted key files to TypeScript and added type definitions
 - 9/16 - Converted Redux store and root reducer to TypeScript
+- 9/16 - Converted all Redux files (shop, directory, cart) to TypeScript
 
 ## 9/10 Package Update Summary
 We have successfully updated and migrated the ecommerce application to use newer package versions. Here's a summary of the changes made:
