@@ -1,3 +1,10 @@
+/**
+ * Entry point for the React application.
+ *
+ * Sets up Redux, React Router v7, and persistence for the app.
+ * Defines the main route structure using createBrowserRouter and RouterProvider.
+ */
+
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -19,7 +26,7 @@ import App from './App';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-// Create a browser router with the App component as the root
+// Define route structure for the app using React Router v7 Data Router API
 const router = createBrowserRouter([
   {
     path: "/",
@@ -76,6 +83,7 @@ const router = createBrowserRouter([
   }
 ]);
 
+// Mount the router to the root DOM node
 root.render(
   <RouterProvider router={router} />
 );
