@@ -8,10 +8,12 @@
  */
 import React from 'react';
 import { Outlet } from 'react-router-dom'; // For routing within the shop page
-import { connect } from 'react-redux'; // For connecting component to Redux store
+import { connect, ConnectedProps } from 'react-redux'; // For connecting component to Redux store
+import { Dispatch } from 'redux';
 
 // Action creator to update collections in Redux store
 import { updateCollections } from '../../redux/shop/shop.actions';
+import { CollectionsMap } from '../../redux/shop/shop.types';
 
 // Firebase utilities
 import {
@@ -20,25 +22,44 @@ import {
 } from '../../firebase/firebase.utils';
 
 /**
+ * Interface for ShopPage component state
+ */
+interface ShopPageState {
+  loading: boolean;
+}
+
+/**
+ * Type for the Outlet context
+ */
+interface ShopPageOutletContext {
+  loading: boolean;
+}
+
+/**
+ * Type for ShopPage props from Redux connect
+ */
+type ShopPageProps = ConnectedProps<typeof connector>;
+
+/**
  * ShopPage class component
  *
  * Handles fetching collection data from Firestore and displaying
  * either collections overview or a specific collection based on route
  */
-class ShopPage extends React.Component {
+class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
   // Component state to track loading status
-  state = {
+  state: ShopPageState = {
     loading: true,
   };
 
   // Property to store Firebase subscription for cleanup
-  unsubscribeFromSnapShot = null;
+  unsubscribeFromSnapShot: (() => void) | null = null;
 
   /**
    * Lifecycle method that runs when component mounts
    * Fetches collection data from Firestore and updates Redux store
    */
-  componentDidMount() {
+  componentDidMount(): void {
     const { updateCollections } = this.props;
     // Get reference to 'collections' collection in Firestore
     const collectionRef = firestore.collection('collections');
@@ -57,14 +78,12 @@ class ShopPage extends React.Component {
   /**
    * Render method for ShopPage component
    * Sets up routes for collections overview and individual collection pages
-   *
-   * @returns {JSX.Element} - Rendered shop page with routes
    */
-  render() {
+  render(): React.ReactNode {
     const { loading } = this.state; // loading state determines whether to show spinner
     return (
       <div className="shop-page">
-        <Outlet context={{ loading }} />
+        <Outlet context={{ loading } as ShopPageOutletContext} />
       </div>
     );
   }
@@ -74,16 +93,15 @@ class ShopPage extends React.Component {
  * mapDispatchToProps function
  *
  * Maps Redux dispatch actions to component props
- *
- * @param {Function} dispatch - Redux dispatch function
- * @returns {Object} Object with action creator functions as props
  */
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Maps updateCollections action creator to props
-  updateCollections: (collectionsMap) =>
-    dispatch(updateCollections(collectionsMap)),
+  updateCollections: (collectionsMap: CollectionsMap) =>
+    dispatch(updateCollections(collectionsMap) as any),
 });
 
+// Create connector with connect and mapDispatchToProps
+const connector = connect(null, mapDispatchToProps);
+
 // Connect the ShopPage component to Redux store
-// First parameter is null because we don't need any state from the store
-export default connect(null, mapDispatchToProps)(ShopPage);
+export default connector(ShopPage);

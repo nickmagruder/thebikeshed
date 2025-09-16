@@ -6,9 +6,12 @@
  *
  * The component connects to Redux store to access cart items and total price.
  */
-import React from 'react';
-import { connect } from 'react-redux'; // For connecting component to Redux store
+import React, { FC } from 'react';
+import { connect, ConnectedProps } from 'react-redux'; // For connecting component to Redux store
 import { createStructuredSelector } from 'reselect'; // Utility for creating structured selectors
+
+// Types
+import { RootState, CartItem } from '../../types/redux.types';
 
 // Selectors to get cart items and total price from Redux store
 import {
@@ -23,12 +26,36 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 import './checkout.styles.scss';
 
 /**
- * CheckoutPage component
- * @param {Array} cartItems - Array of items in the cart
- * @param {number} total - Total price of all items in the cart
- * @returns {JSX.Element} - Rendered checkout page
+ * Structure for the state props from Redux
  */
-const CheckoutPage = ({ cartItems, total }) => (
+interface CheckoutPageStateProps {
+  cartItems: CartItem[];
+  total: number;
+}
+
+/**
+ * Uses createStructuredSelector to select multiple pieces of state from Redux store:
+ * - cartItems: All items currently in the cart
+ * - total: The total price of all items in the cart
+ */
+const mapStateToProps = createStructuredSelector<
+  RootState,
+  CheckoutPageStateProps
+>({
+  cartItems: selectCartItems,
+  total: selectCartTotal,
+});
+
+// Create the connector with our mapStateToProps
+const connector = connect(mapStateToProps);
+
+// Get the props type from the connector
+type CheckoutPageProps = ConnectedProps<typeof connector>;
+
+/**
+ * CheckoutPage component
+ */
+const CheckoutPage: FC<CheckoutPageProps> = ({ cartItems, total }) => (
   <div className="checkout-page">
     {/* Header row with column labels */}
     <div className="checkout-header">
@@ -57,17 +84,5 @@ const CheckoutPage = ({ cartItems, total }) => (
   </div>
 );
 
-/**
- * mapStateToProps function
- *
- * Uses createStructuredSelector to select multiple pieces of state from Redux store:
- * - cartItems: All items currently in the cart
- * - total: The total price of all items in the cart
- */
-const mapStateToProps = createStructuredSelector({
-  cartItems: selectCartItems,
-  total: selectCartTotal,
-});
-
 // Connect the CheckoutPage component to Redux store
-export default connect(mapStateToProps)(CheckoutPage);
+export default connector(CheckoutPage);
