@@ -31,68 +31,6 @@ cp .env.example .env.development
 npm start
 ```
 
-### Production Deployment on Heroku-24 with Nginx
-
-This project is configured for deployment on Heroku-24 stack using the Nginx buildpack, which provides improved performance, security headers, and enhanced routing:
-
-1. Create a new Heroku app with the Heroku-24 stack:
-```bash
-heroku create your-app-name --stack heroku-24
-```
-
-2. Add the Nginx buildpack to your Heroku app:
-```bash
-heroku buildpacks:add heroku/nodejs
-heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nginx
-```
-
-3. Set your Firebase configuration as Heroku config vars:
-```bash
-heroku config:set REACT_APP_FIREBASE_API_KEY=your_api_key
-heroku config:set REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-heroku config:set REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-heroku config:set REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-heroku config:set REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-heroku config:set REACT_APP_FIREBASE_APP_ID=your_app_id
-heroku config:set REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
-```
-
-4. Or set multiple config vars at once using the Heroku Dashboard:
-   - Go to your app dashboard on Heroku
-   - Navigate to Settings
-   - Click "Reveal Config Vars"
-   - Add each environment variable with its value
-
-5. Deploy your application:
-```bash
-git push heroku main
-```
-
-#### Nginx Configuration
-
-The application uses a `static.json` file to configure Nginx:
-- Routes all requests to index.html for single page app functionality
-- Enforces HTTPS for all connections
-- Sets security headers (Content-Security-Policy, X-Frame-Options, etc.)
-- Enables clean URLs without .html extensions
-
-#### Important Notes for Heroku-24
-
-- Heroku-24 requires Node.js 20 or newer (our package.json is configured for this)
-- The application uses the `heroku-postbuild` script to build the React app
-- The Procfile is set to use `bin/start-nginx-static` from the Nginx buildpack
-- Config vars can be updated without redeploying the application
-- Config vars are automatically available as environment variables to your application
-- Use `heroku logs --tail` to monitor your application and check for any environment variable issues
-
-### Important Notes for Environment Variables
-
-- All environment variables must be prefixed with `REACT_APP_` to be accessible in the React application
-- Environment variables are loaded when the server starts; changes require a restart
-- In development, if you modify `.env.development`, restart with `npm start`
-- In production on Heroku, updating config vars doesn't require a full redeploy
-- If you encounter Firebase initialization errors, check that your environment variables are correctly set
-
 ## Photo Credits
 - Adventure Bikes Photo by <a href="https://unsplash.com/@worldsbetweenlines?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Patrick Hendry</a> on <a href="https://unsplash.com/s/photos/bikepacking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
@@ -100,17 +38,12 @@ The application uses a `static.json` file to configure Nginx:
 
 - Accessories Photo by <a href="https://unsplash.com/@xokvictor?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Viktor Bystrov</a> on <a href="https://unsplash.com/s/photos/bicycle-cap?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
-
-  
-  
 # Change Log
-
 - 6/30 - 3:21 - React App Created + homepage started
 - 7/2 - 1:56 - Menu item styling/animations added
 - 7/9 6:40pm - Started building routes - Hats route created
 - 7/19 11:22pm - Collection preview component created
 - 7/24 - Shop page and sign-in/up started
-
 - 10/7 - Local images added
 - 10/8 - Sign in component built, custom button
 - 10/12 - Sign-in & Sign Up completed
@@ -123,6 +56,7 @@ The application uses a `static.json` file to configure Nginx:
 - 9/9 - Updated all npm packages to latest versions (React 18, Redux 5, Firebase 10, and more)
 - 9/10 - Updated React Router from v6 to v7 with Data Router API
 - 9/10 - Implemented Heroku Nginx buildpack with security headers and optimized configuration
+- 9/11 - Converted key files to TypeScript and added type definitions
 
 ## 9/10 Package Update Summary
 We have successfully updated and migrated the ecommerce application to use newer package versions. Here's a summary of the changes made:
@@ -171,9 +105,47 @@ We have successfully updated and migrated the ecommerce application to use newer
 - Configured Content-Security-Policy and other security headers
 - Enforced HTTPS connections
 
-### 4. Additional Changes
+### 4. TypeScript Conversion
+
+- Converted the project to use TypeScript for improved type safety
+- Added tsconfig.json with React-specific configuration
+- Created type definition files in src/types/ directory
+- Converted key files from JavaScript (.js) to TypeScript (.tsx):
+  - src/index.js → src/index.tsx
+  - src/App.js → src/App.tsx
+- Created dedicated type definition files:
+  - redux.types.ts: Redux state and action types
+  - firebase.types.ts: Firebase authentication and data types
+  - hooks.ts: Type-safe React Redux hooks
+
+### 5. Additional Changes
 
 - Created detailed migration documentation
 - Fixed dependency conflicts
 - Added helper scripts for managing dependencies
 - Created .npmrc with legacy-peer-deps setting
+
+## TypeScript Implementation Details
+
+The TypeScript conversion provides several benefits:
+
+1. **Type Safety** - Catching errors at compile time rather than runtime
+2. **Better IDE Support** - Improved autocompletion and documentation
+3. **Clearer Interfaces** - Explicit typing of component props and state
+4. **Improved Maintainability** - Self-documenting code with type annotations
+
+### Key TypeScript Features Used
+
+- **Generic Types** - For Redux store typing (RootState, AppDispatch)
+- **Interfaces** - For defining shape of objects (User, FirebaseUserData)
+- **Type Assertions** - For handling Firebase data conversions
+- **Type Guards** - For safe handling of null/undefined values
+- **Typed Hooks** - Custom hooks with TypeScript support (useAppDispatch, useAppSelector)
+- **Enum Types** - For action type constants (UserActionTypes)
+
+### Next Steps
+
+- Continue converting remaining components to TypeScript
+- Add more comprehensive type definitions for Redux actions and reducers
+- Implement stricter TypeScript configuration as the codebase matures
+- Convert SCSS modules to use TypeScript-aware CSS modules

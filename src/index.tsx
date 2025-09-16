@@ -1,17 +1,23 @@
 /**
  * Entry point for the React application.
  *
- * Sets up Redux, React Router v7, and persistence for the app.
+ * Sets up Redux, React Router, and persistence for the app.
  * Defines the main route structure using createBrowserRouter and RouterProvider.
  */
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  LoaderFunction,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from './redux/store';
+import { RootState } from './types/redux.types';
+import { SignInLoaderResult } from './types/firebase.types';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import CheckoutPage from './pages/checkout/checkout.component';
@@ -22,14 +28,35 @@ import CollectionPageWithOutletContext from './components/collection-item/collec
 import './index.css';
 import App from './App';
 
-// React 18 uses createRoot instead of ReactDOM.render
+// React 19 uses createRoot instead of ReactDOM.render
 const container = document.getElementById('root');
+// TypeScript safety: ensure container is not null before creating root
+if (!container) {
+  throw new Error(
+    "Root element not found! Add a div with id='root' to your HTML."
+  );
+}
 const root = createRoot(container);
+
+/**
+ * SignIn page loader function
+ * Checks if user is authenticated and determines if redirect is needed
+ */
+const signInLoader = (): SignInLoaderResult => {
+  // Access the store directly to get current user state
+  const state: RootState = store.getState();
+  const currentUser = state.user.currentUser;
+
+  if (currentUser) {
+    return { redirect: true };
+  }
+  return { redirect: false };
+};
 
 // Define route structure for the app using React Router v7 Data Router API
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
@@ -40,50 +67,42 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
-        path: "shop",
+        path: 'shop',
         element: <ShopPage />,
         children: [
           {
             index: true,
-            element: <CollectionsOverviewWithOutletContext />
+            element: <CollectionsOverviewWithOutletContext />,
           },
           {
-            path: ":collectionId",
-            element: <CollectionPageWithOutletContext />
-          }
-        ]
+            path: ':collectionId',
+            element: <CollectionPageWithOutletContext />,
+          },
+        ],
       },
       {
-        path: "checkout",
-        element: <CheckoutPage />
+        path: 'checkout',
+        element: <CheckoutPage />,
       },
       {
         //TODO: build contact page
-        path: "contact",
-        element: <HomePage />
+        path: 'contact',
+        element: <HomePage />,
       },
       {
-        path: "signin",
-        loader: () => {
-          // Access the store directly to get current user state
-          const state = store.getState();
-          const currentUser = state.user.currentUser;
-          
-          if (currentUser) {
-            return { redirect: true };
-          }
-          return { redirect: false };
-        },
-        element: <SignInAndSignUpPage />
-      }
-    ]
-  }
+        path: 'signin',
+        loader: signInLoader as LoaderFunction,
+        element: <SignInAndSignUpPage />,
+      },
+    ],
+  },
 ]);
 
 // Mount the router to the root DOM node
-root.render(
-  <RouterProvider router={router} />
-);
+root.render(<RouterProvider router={router} />);
+
+// Export empty object to signal this is a module
+export {};
