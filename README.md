@@ -1,15 +1,17 @@
-# ecommerce app
+# The Bike Shed
 
 ## Package Updates (September 2025)
 
 This project's packages have been updated to stable compatible versions as of September 2025. Major updates include:
 
-- React 18 (from React 17)
+- React 19 (from React 17)
 - React Router 6 (from v5)
 - React-Redux 8 (from v7)
 - Firebase 10 (from v9)
 - Styled-Components 6 (from v5)
 - Sass (replacing deprecated node-sass)
+- Node 24 (from 20)
+- npm 11 (from 10)
 
 ## Environment Setup
 
@@ -123,21 +125,24 @@ The application uses a `static.json` file to configure Nginx:
 - 9/10 - Implemented Heroku Nginx buildpack with security headers and optimized configuration
 
 ## 9/10 Package Update Summary
-
 We have successfully updated and migrated the ecommerce application to use newer package versions. Here's a summary of the changes made:
 
 ### 1. Updated Packages
 
-- React: 17.x → 18.2.0
+- React: 17.x → 19.1.0
 - React Router: 5.x → 7.8.2
 - React Redux: 7.x → 8.1.1
+- Redux: 4.2.1 → 5.0.1
+- React Dom: 18.2.0 → 19.1.1
 - Firebase: 9.1.2 → 10.1.0
 - Styled Components: 5.x → 6.0.7
 - node-sass → sass
+- npm: 10.x → 11.x
+- Node.js: 20.x → 24.x
 
 ### 2. Code Migration
 
-#### React 18
+#### React 19
 - Updated index.js to use the new `createRoot` API
 - Removed ReactDOM.render in favor of createRoot.render
 
