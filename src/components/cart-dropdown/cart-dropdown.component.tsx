@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { FC } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,17 +8,27 @@ import CartItem from '../cart-item/cart-item.component';
 
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
+import { CartItem as CartItemType, RootState } from '../../types/redux.types';
 
 import './cart-dropdown.styles.scss';
 
-const CartDropdown = ({ cartItems, dispatch }) => {
+/**
+ * Props from Redux connect
+ */
+type CartDropdownProps = ConnectedProps<typeof connector>;
+
+/**
+ * CartDropdown component - displays a dropdown with cart items and checkout button
+ */
+const CartDropdown: FC<CartDropdownProps> = ({ cartItems, dispatch }) => {
+  // Using React Router v6 navigation hook
   const navigate = useNavigate();
-  
+
   return (
     <div className="cart-dropdown">
       <div className="cart-items">
         {cartItems.length ? (
-          cartItems.map((cartItem) => (
+          cartItems.map((cartItem: CartItemType) => (
             <CartItem key={cartItem.id} item={cartItem} />
           ))
         ) : (
@@ -28,7 +38,7 @@ const CartDropdown = ({ cartItems, dispatch }) => {
       <CustomButton
         onClick={() => {
           navigate('/checkout');
-          dispatch(toggleCartHidden());
+          dispatch(toggleCartHidden() as any);
         }}
       >
         GO TO CHECKOUT
@@ -37,8 +47,19 @@ const CartDropdown = ({ cartItems, dispatch }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
+/**
+ * Maps Redux state to component props using reselect
+ */
+const mapStateToProps = createStructuredSelector<
+  RootState,
+  {
+    cartItems: CartItemType[];
+  }
+>({
   cartItems: selectCartItems,
 });
 
-export default connect(mapStateToProps)(CartDropdown);
+// Create connector
+const connector = connect(mapStateToProps);
+
+export default connector(CartDropdown);

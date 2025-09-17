@@ -34,8 +34,8 @@ const config: FirebaseConfig = {
 if (!process.env.REACT_APP_FIREBASE_API_KEY) {
   console.error(
     'Firebase configuration is missing. Make sure your environment variables are set up correctly. ' +
-    'In development, check your .env.development file. ' +
-    'In production on Heroku, check your config vars.'
+      'In development, check your .env.development file. ' +
+      'In production on Heroku, check your config vars.'
   );
 }
 
@@ -66,7 +66,7 @@ export interface AdditionalUserData {
  * @returns The Firestore document reference for the user
  */
 export const createUserProfileDocument = async (
-  userAuth: UserAuth | null, 
+  userAuth: UserAuth | null,
   additionalData?: AdditionalUserData
 ): Promise<firebase.firestore.DocumentReference | undefined> => {
   if (!userAuth) return;
@@ -87,7 +87,10 @@ export const createUserProfileDocument = async (
         ...additionalData,
       });
     } catch (error: unknown) {
-      console.log('error creating user', error instanceof Error ? error.message : 'Unknown error');
+      console.log(
+        'error creating user',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
     }
   }
   return userRef;
@@ -175,7 +178,7 @@ export const convertCollectionsSnapshotToMap = (
     (accumulator: CollectionsMap, collection: TransformedCollection) => {
       accumulator[collection.title.toLowerCase()] = collection;
       return accumulator;
-    }, 
+    },
     {} as CollectionsMap
   );
 };
