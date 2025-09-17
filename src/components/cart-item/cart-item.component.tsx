@@ -3,17 +3,13 @@ import { CartItem as CartItemType } from '../../types/redux.types';
 
 import './cart-item.styles.scss';
 
-/**
- * Props for CartItem component
- */
+// Props for CartItem component
 interface CartItemProps {
   item: CartItemType;
 }
 
-/**
- * CartItem component - displays individual cart items in the cart dropdown
- * Memoized to prevent unnecessary re-renders when cart items change
- */
+// CartItem component - displays individual cart items in the cart dropdown
+// Memoized to prevent unnecessary re-renders when cart items change
 const CartItem: FC<CartItemProps> = ({
   item: { imageUrl, price, name, quantity },
 }) => (
