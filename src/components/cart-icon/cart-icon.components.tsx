@@ -11,14 +11,10 @@ import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 
 import './cart-icon.styles.scss';
 
-/**
- * Props from Redux connect
- */
+// Props from Redux connect
 type CartIconProps = ConnectedProps<typeof connector>;
 
-/**
- * CartIcon component - displays shopping cart icon with item count
- */
+// CartIcon component - displays shopping cart icon with item count
 const CartIcon: FC<CartIconProps> = ({ toggleCartHidden, itemCount }) => (
   <div className="cart-icon" onClick={toggleCartHidden}>
     <ShoppingIcon className="shopping-icon" />
@@ -26,16 +22,12 @@ const CartIcon: FC<CartIconProps> = ({ toggleCartHidden, itemCount }) => (
   </div>
 );
 
-/**
- * Maps dispatch actions to component props
- */
+// Maps dispatch actions to component props
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden() as any),
 });
 
-/**
- * Maps Redux state to component props using reselect
- */
+// Maps Redux state to component props using reselect
 const mapStateToProps = createStructuredSelector<
   RootState,
   {

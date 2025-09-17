@@ -12,14 +12,10 @@ import { CartItem as CartItemType, RootState } from '../../types/redux.types';
 
 import './cart-dropdown.styles.scss';
 
-/**
- * Props from Redux connect
- */
+// Props from Redux connect
 type CartDropdownProps = ConnectedProps<typeof connector>;
 
-/**
- * CartDropdown component - displays a dropdown with cart items and checkout button
- */
+// CartDropdown component - displays a dropdown with cart items and checkout button
 const CartDropdown: FC<CartDropdownProps> = ({ cartItems, dispatch }) => {
   // Using React Router v6 navigation hook
   const navigate = useNavigate();
@@ -47,9 +43,7 @@ const CartDropdown: FC<CartDropdownProps> = ({ cartItems, dispatch }) => {
   );
 };
 
-/**
- * Maps Redux state to component props using reselect
- */
+// Maps Redux state to component props using reselect
 const mapStateToProps = createStructuredSelector<
   RootState,
   {
