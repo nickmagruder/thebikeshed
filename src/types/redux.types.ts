@@ -1,3 +1,37 @@
+// Import from redux-persist
+import { PersistPartial } from 'redux-persist/es/persistReducer';
+// Import from Redux
+import { AnyAction, Dispatch } from 'redux';
+// Import shop types
+import { CollectionsMap } from '../redux/shop/shop.types';
+
+// User type from Firebase user object
+export interface User {
+  id: string;
+  displayName?: string;
+  email: string;
+  createdAt: Date;
+  [key: string]: unknown; // For additional properties that may come from Firebase
+}
+
+// Cart item interface
+export interface CartItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+}
+
+// Directory section interface
+export interface Section {
+  title: string;
+  imageUrl: string;
+  id: number;
+  linkUrl: string;
+  size?: string;
+}
+
 // State types for each reducer
 export interface UserState {
   currentUser: User | null;
@@ -13,7 +47,7 @@ export interface DirectoryState {
 }
 
 export interface ShopState {
-  collections: { [key: string]: any } | null;
+  collections: CollectionsMap | null;
 }
 
 // Combined root state type
@@ -24,54 +58,19 @@ export interface RootState {
   shop: ShopState;
 }
 
-/**
- * AppDispatch type - for typed dispatch functions
- */
-export type AppDispatch = (action: any) => any;
+// Root state with persist partial for store.getState()
+export type PersistedRootState = RootState & PersistPartial;
 
-/**
- * Cart item interface
- */
-export interface CartItem {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-}
+// AppDispatch type - for typed dispatch functions
+// Uses Redux's standard Dispatch type to ensure compatibility with connect()
+export type AppDispatch = Dispatch<AnyAction>;
 
-/**
- * Directory section interface
- */
-export interface Section {
-  title: string;
-  imageUrl: string;
-  id: number;
-  linkUrl: string;
-  size?: string;
-}
-
-/**
- * User type from Firebase user object
- */
-export interface User {
-  id: string;
-  displayName?: string;
-  email: string;
-  createdAt: Date;
-  [key: string]: any; // For additional properties that may come from Firebase
-}
-
-/**
- * User action types
- */
+// User action types
 export enum UserActionTypes {
   SET_CURRENT_USER = 'SET_CURRENT_USER',
 }
 
-/**
- * User action type
- */
+// User action type
 export interface SetCurrentUserAction {
   type: UserActionTypes.SET_CURRENT_USER;
   payload: User | null;

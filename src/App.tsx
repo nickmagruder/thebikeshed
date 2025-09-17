@@ -1,10 +1,7 @@
 /**
  * Main App component
- *
  * Handles global authentication state, header rendering, and routing via React Router's Outlet.
  * Connects to Redux for user state management.
- *
- * @component
  */
 
 import React from 'react';
@@ -18,7 +15,7 @@ import Header from './components/header/header.component';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
-import { User, RootState, AppDispatch } from './types/redux.types';
+import { User, RootState } from './types/redux.types';
 import { FirebaseSnapshot } from './types/firebase.types';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
@@ -33,9 +30,7 @@ class App extends React.Component<AppProps> {
   // Type for the unsubscribe function
   unsubscribeFromAuth: (() => void) | null = null;
 
-  /**
-   * On mount, subscribe to Firebase auth state changes and update Redux store.
-   */
+  // On mount, subscribe to Firebase auth state changes and update Redux store.
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
@@ -45,9 +40,12 @@ class App extends React.Component<AppProps> {
 
         if (userRef) {
           userRef.onSnapshot((snapShot: FirebaseSnapshot) => {
+            const data = (snapShot.data() || {}) as Partial<User>;
             setCurrentUser({
               id: snapShot.id,
-              ...snapShot.data(),
+              email: data.email ?? '',
+              createdAt: data.createdAt ?? new Date(0),
+              ...data,
             });
           });
         }
@@ -57,18 +55,14 @@ class App extends React.Component<AppProps> {
     });
   }
 
-  /**
-   * Unsubscribe from Firebase auth listener on unmount.
-   */
+  // Unsubscribe from Firebase auth listener on unmount.
   componentWillUnmount() {
     if (this.unsubscribeFromAuth) {
       this.unsubscribeFromAuth();
     }
   }
 
-  /**
-   * Renders the application header and routed content.
-   */
+  // Renders the application header and routed content.
   render() {
     return (
       <div>
@@ -79,9 +73,7 @@ class App extends React.Component<AppProps> {
   }
 }
 
-/**
- * Maps Redux state to App props.
- */
+// Maps Redux state to App props.
 const mapStateToProps = createStructuredSelector<
   RootState,
   Pick<AppProps, 'currentUser'>
@@ -89,11 +81,9 @@ const mapStateToProps = createStructuredSelector<
   currentUser: selectCurrentUser,
 });
 
-/**
- * Maps dispatch actions to App props.
- */
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setCurrentUser: (user: User | null) => dispatch(setCurrentUser(user)),
-});
+// Maps dispatch actions to App props.
+const mapDispatchToProps = {
+  setCurrentUser,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

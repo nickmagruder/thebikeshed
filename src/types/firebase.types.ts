@@ -5,20 +5,18 @@ export interface SignInLoaderResult {
   redirect: boolean;
 }
 
-/**
- * Firebase auth-related types
- */
+// Firebase auth-related types
 export interface FirebaseUserData {
   id: string;
   displayName: string | null;
   email: string | null;
   createdAt: Date;
-  [key: string]: any;
+  [key: string]: unknown; // For additional properties that may come from Firebase
 }
 
 export interface FirebaseSnapshot {
   id: string;
-  data(): any;
+  data(): unknown;
 }
 
 export interface FirebaseUserRef {

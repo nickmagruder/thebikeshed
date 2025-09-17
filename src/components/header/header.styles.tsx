@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-
+// Main container for the header
 export const HeaderContainer = styled.div`
   height: 70px;
   width: 100%;
@@ -10,12 +10,14 @@ export const HeaderContainer = styled.div`
   margin-bottom: 25px;
 `;
 
+// Container for the logo with Link functionality
 export const LogoContainer = styled(Link)`
   height: 100%;
   width: 100px;
   padding: 25px;
 `;
 
+// Container for navigation options
 export const OptionsContainer = styled.div`
   width: 50%;
   height: 100%;
@@ -28,6 +30,7 @@ export const OptionsContainer = styled.div`
   }
 `;
 
+// Styled Link component for navigation options
 export const OptionLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;

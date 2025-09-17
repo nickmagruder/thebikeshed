@@ -35,5 +35,7 @@ export const selectCollection = memoize((collectionUrlParam: string) =>
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   (collections): Collection[] =>
-    collections ? Object.keys(collections).map((key) => collections[key]) : []
+    collections 
+      ? Object.keys(collections).map((key) => collections[key]) 
+      : []
 );
