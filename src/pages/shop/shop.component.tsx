@@ -67,9 +67,25 @@ class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
     // Get data once (not using real-time listener)
     collectionRef.get().then((snapshot) => {
       // Convert the Firebase snapshot to a format our app can use
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+      const firebaseCollectionsMap = convertCollectionsSnapshotToMap(snapshot);
+      
+      // Convert the Firebase collections map to the format expected by Redux
+      const reduxCollectionsMap: CollectionsMap = Object.keys(firebaseCollectionsMap).reduce(
+        (accumulator, key) => {
+          const collection = firebaseCollectionsMap[key];
+          accumulator[key] = {
+            id: Number(collection.id) || 0, // Convert string ID to number
+            title: collection.title,
+            routeName: collection.routeName,
+            items: collection.items,
+          };
+          return accumulator;
+        },
+        {} as CollectionsMap
+      );
+      
       // Update Redux store with collection data
-      updateCollections(collectionsMap);
+      updateCollections(reduxCollectionsMap);
       // Set loading to false once data is received
       this.setState({ loading: false });
     });
