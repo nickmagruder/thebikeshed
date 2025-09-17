@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import './menu-item.styles.scss';
 
-const MenuItem = ({ title, imageUrl, size, linkUrl }) => {
+// Props interface for the MenuItem component
+interface MenuItemProps {
+  title: string;
+  imageUrl: string;
+  size: string;
+  linkUrl: string;
+}
+
+// MenuItem component - displays a category tile on the homepage
+// with background image and navigation functionality
+const MenuItem: FC<MenuItemProps> = ({ title, imageUrl, size, linkUrl }) => {
+  // Use React Router hooks for navigation
   const navigate = useNavigate();
   const location = useLocation();
   

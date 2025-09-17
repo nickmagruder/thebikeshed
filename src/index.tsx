@@ -16,7 +16,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from './redux/store';
-import { RootState } from './types/redux.types';
+import { PersistedRootState } from './types/redux.types';
 import { SignInLoaderResult } from './types/firebase.types';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -44,7 +44,7 @@ const root = createRoot(container);
  */
 const signInLoader = (): SignInLoaderResult => {
   // Access the store directly to get current user state
-  const state: RootState = store.getState();
+  const state = store.getState() as PersistedRootState;
   const currentUser = state.user.currentUser;
 
   if (currentUser) {
