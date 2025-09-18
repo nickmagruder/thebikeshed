@@ -6,10 +6,9 @@
  * - Passing loading state to child routes via Outlet context
  * - Loading states while data is being fetched
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom'; // For routing within the shop page
-import { connect, ConnectedProps } from 'react-redux'; // For connecting component to Redux store
-import { Dispatch } from 'redux';
+import { useAppDispatch } from '../../types/hooks'; // Custom typed dispatch hook
 
 // Action creator to update collections in Redux store
 import { updateCollections } from '../../redux/shop/shop.actions';
@@ -22,13 +21,6 @@ import {
 } from '../../firebase/firebase.utils';
 
 /**
- * Interface for ShopPage component state
- */
-interface ShopPageState {
-  loading: boolean;
-}
-
-/**
  * Type for the Outlet context
  */
 interface ShopPageOutletContext {
@@ -36,31 +28,23 @@ interface ShopPageOutletContext {
 }
 
 /**
- * Type for ShopPage props from Redux connect
- */
-type ShopPageProps = ConnectedProps<typeof connector>;
-
-/**
- * ShopPage class component
+ * ShopPage functional component
  *
  * Handles fetching collection data from Firestore and displaying
  * either collections overview or a specific collection based on route
  */
-class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
-  // Component state to track loading status
-  state: ShopPageState = {
-    loading: true,
-  };
-
-  // Property to store Firebase subscription for cleanup
-  unsubscribeFromSnapShot: (() => void) | null = null;
+const ShopPage: React.FC = () => {
+  // State hook to track loading status
+  const [loading, setLoading] = useState(true);
+  
+  // Get dispatch function from Redux
+  const dispatch = useAppDispatch();
 
   /**
-   * Lifecycle method that runs when component mounts
-   * Fetches collection data from Firestore and updates Redux store
+   * Effect hook to fetch collection data on component mount
+   * Replaces componentDidMount lifecycle method
    */
-  componentDidMount(): void {
-    const { updateCollections } = this.props;
+  useEffect(() => {
     // Get reference to 'collections' collection in Firestore
     const collectionRef = firestore.collection('collections');
 
@@ -85,39 +69,18 @@ class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
       );
       
       // Update Redux store with collection data
-      updateCollections(reduxCollectionsMap);
+      dispatch(updateCollections(reduxCollectionsMap));
       // Set loading to false once data is received
-      this.setState({ loading: false });
+      setLoading(false);
     });
-  }
 
-  /**
-   * Render method for ShopPage component
-   * Sets up routes for collections overview and individual collection pages
-   */
-  render(): React.ReactNode {
-    const { loading } = this.state; // loading state determines whether to show spinner
-    return (
-      <div className="shop-page">
-        <Outlet context={{ loading } as ShopPageOutletContext} />
-      </div>
-    );
-  }
-}
+  }, [dispatch]); // Only re-run effect if dispatch changes (it shouldn't)
 
-/**
- * mapDispatchToProps function
- *
- * Maps Redux dispatch actions to component props
- */
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // Maps updateCollections action creator to props
-  updateCollections: (collectionsMap: CollectionsMap) =>
-    dispatch(updateCollections(collectionsMap) as any),
-});
+  return (
+    <div className="shop-page">
+      <Outlet context={{ loading } as ShopPageOutletContext} />
+    </div>
+  );
+};
 
-// Create connector with connect and mapDispatchToProps
-const connector = connect(null, mapDispatchToProps);
-
-// Connect the ShopPage component to Redux store
-export default connector(ShopPage);
+export default ShopPage;

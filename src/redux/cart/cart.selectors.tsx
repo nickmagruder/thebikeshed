@@ -1,30 +1,22 @@
 import { createSelector } from 'reselect';
 import { RootState, CartItem } from '../../types/redux.types';
 
-/**
- * Base selector for cart state
- */
+// Base selector for cart state
 const selectCart = (state: RootState) => state.cart;
 
-/**
- * Selector to get cart items
- */
+// Selector to get cart items
 export const selectCartItems = createSelector(
   [selectCart],
   (cart) => cart.cartItems
 );
 
-/**
- * Selector to get cart hidden state
- */
+// Selector to get cart hidden state
 export const selectCartHidden = createSelector(
   [selectCart],
   (cart) => cart.hidden
 );
 
-/**
- * Selector to get total quantity of items in cart
- */
+// Selector to get total quantity of items in cart
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
   (cartItems: CartItem[]): number =>
@@ -35,9 +27,7 @@ export const selectCartItemsCount = createSelector(
     )
 );
 
-/**
- * Selector to get total price of items in cart
- */
+// Selector to get total price of items in cart
 export const selectCartTotal = createSelector(
   [selectCartItems],
   (cartItems: CartItem[]): number =>

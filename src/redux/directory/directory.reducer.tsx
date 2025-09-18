@@ -1,9 +1,7 @@
 import { DirectoryState } from '../../types/redux.types';
 
-/**
- * Initial state for directory
- * Contains predefined directory sections
- */
+// Initial state for directory
+// Contains predefined directory sections
 const INITIAL_STATE: DirectoryState = {
   sections: [
     {
@@ -41,16 +39,15 @@ const INITIAL_STATE: DirectoryState = {
   ],
 };
 
-/**
- * Directory reducer - currently only returns state as no actions modify it
- *
- * @param state - Current directory state
- * @param action - Action dispatched
- * @returns Directory state
- */
+// Directory reducer - currently only returns state as no actions modify it
+// @param state - Current directory state
+// @param action - Action dispatched
+// @returns Directory state
+import { Action } from 'redux';
+
 const directoryReducer = (
   state = INITIAL_STATE,
-  action: any
+  action: Action
 ): DirectoryState => {
   switch (action.type) {
     default:

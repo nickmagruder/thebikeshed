@@ -2,9 +2,7 @@ import { CartActionType, CartAction } from './cart.types';
 import { addItemToCart, removeItemFromCart } from './cart.utils';
 import { CartState } from '../../types/redux.types';
 
-/**
- * Initial state for the cart reducer
- */
+// Initial state for the cart reducer
 const INITIAL_STATE: CartState = {
   hidden: true,
   cartItems: [],
