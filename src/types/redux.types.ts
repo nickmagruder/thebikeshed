@@ -1,7 +1,5 @@
 // Import from redux-persist
 import { PersistPartial } from 'redux-persist/es/persistReducer';
-// Import from Redux
-import { AnyAction, Dispatch } from 'redux';
 // Import shop types
 import { CollectionsMap } from '../redux/shop/shop.types';
 
@@ -60,10 +58,6 @@ export interface RootState {
 
 // Root state with persist partial for store.getState()
 export type PersistedRootState = RootState & PersistPartial;
-
-// AppDispatch type - for typed dispatch functions
-// Uses Redux's standard Dispatch type to ensure compatibility with connect()
-export type AppDispatch = Dispatch<AnyAction>;
 
 // User action types
 export enum UserActionTypes {
