@@ -1,6 +1,4 @@
-/**
- * Type definition for the SignIn loader response
- */
+// Type definition for the SignIn loader response
 export interface SignInLoaderResult {
   redirect: boolean;
 }

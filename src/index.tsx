@@ -1,11 +1,6 @@
-/**
- * Entry point for the React application.
- *
- * Sets up Redux, React Router, and persistence for the app.
- * Defines the main route structure using createBrowserRouter and RouterProvider.
- */
-
-import React from 'react';
+// Entry point for the React application.
+// Sets up Redux, React Router, and persistence for the app.
+// Defines the main route structure using createBrowserRouter and RouterProvider.
 import { createRoot } from 'react-dom/client';
 import {
   RouterProvider,
@@ -30,6 +25,7 @@ import App from './App';
 
 // React 19 uses createRoot instead of ReactDOM.render
 const container = document.getElementById('root');
+
 // TypeScript safety: ensure container is not null before creating root
 if (!container) {
   throw new Error(
@@ -38,10 +34,8 @@ if (!container) {
 }
 const root = createRoot(container);
 
-/**
- * SignIn page loader function
- * Checks if user is authenticated and determines if redirect is needed
- */
+// SignIn page loader function
+// Checks if user is authenticated and determines if redirect is needed
 const signInLoader = (): SignInLoaderResult => {
   // Access the store directly to get current user state
   const state = store.getState() as PersistedRootState;
