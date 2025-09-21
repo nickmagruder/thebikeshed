@@ -4,7 +4,7 @@
  * This component renders a specific collection of products based on the URL parameter.
  * It displays the collection title and a grid of product items for that collection.
  */
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux'; // For connecting component to Redux store
 import { useParams } from 'react-router-dom'; // For accessing URL parameters
 

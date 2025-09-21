@@ -20,9 +20,7 @@ import {
   convertCollectionsSnapshotToMap,
 } from '../../firebase/firebase.utils';
 
-/**
- * Type for the Outlet context
- */
+// Type for the Outlet context
 interface ShopPageOutletContext {
   loading: boolean;
 }
@@ -40,10 +38,8 @@ const ShopPage: React.FC = () => {
   // Get dispatch function from Redux
   const dispatch = useAppDispatch();
 
-  /**
-   * Effect hook to fetch collection data on component mount
-   * Replaces componentDidMount lifecycle method
-   */
+  // Effect hook to fetch collection data on component mount
+  // Replaces componentDidMount lifecycle method
   useEffect(() => {
     // Get reference to 'collections' collection in Firestore
     const collectionRef = firestore.collection('collections');
