@@ -36,6 +36,10 @@
     "REACT_APP_FIREBASE_APP_ID": {
       "description": "Firebase app ID",
       "required": true
+    },
+    "MAPBOX_ACCESS_TOKEN": {
+      "description": "Mapbox API Key",
+      "required": true
     }
   },
   "formation": {
