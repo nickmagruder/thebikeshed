@@ -15,13 +15,9 @@ import { useAppDispatch } from './types/hooks';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
-/**
- * Main application component using functional component pattern with hooks
- */
-const App: React.FC = () => {
-  // We don't need currentUser directly in this component anymore,
-  // as Header component likely consumes it via its own hooks
-  
+
+// Main application component using functional component pattern with hooks
+const App: React.FC = () => {  
   // Get the dispatch function to update Redux state
   const dispatch = useAppDispatch();
   

@@ -56,7 +56,7 @@ export interface UserAuth {
  * Additional user data that can be provided during user creation
  */
 export interface AdditionalUserData {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -104,7 +104,7 @@ export interface ShopItem {
   name: string;
   imageUrl: string;
   price: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -114,7 +114,7 @@ export interface ShopCollection {
   id?: string;
   title: string;
   items: ShopItem[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

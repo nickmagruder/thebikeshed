@@ -9,16 +9,17 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import { store, persistor } from './redux/store';
 import { PersistedRootState } from './types/redux.types';
 import { SignInLoaderResult } from './types/firebase.types';
+
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import CheckoutPage from './pages/checkout/checkout.component';
 import SignInAndSignUpPage from './pages/sign-in-and-up/sign-in-and-up.component';
 import CollectionsOverviewWithOutletContext from './components/collections-overview/collections-overview-with-context.component';
 import CollectionPageWithOutletContext from './components/collection-item/collection-page-with-context.component';
+import Contact from './pages/contact/contact.component';
 
 import './index.css';
 import App from './App';
@@ -82,9 +83,8 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        //TODO: build contact page
         path: 'contact',
-        element: <HomePage />,
+        element: <Contact />,
       },
       {
         path: 'signin',

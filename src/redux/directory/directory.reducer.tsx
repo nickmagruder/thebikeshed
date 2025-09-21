@@ -1,4 +1,5 @@
 import { DirectoryState } from '../../types/redux.types';
+import { Action } from 'redux';
 
 // Initial state for directory
 // Contains predefined directory sections
@@ -43,7 +44,6 @@ const INITIAL_STATE: DirectoryState = {
 // @param state - Current directory state
 // @param action - Action dispatched
 // @returns Directory state
-import { Action } from 'redux';
 
 const directoryReducer = (
   state = INITIAL_STATE,
