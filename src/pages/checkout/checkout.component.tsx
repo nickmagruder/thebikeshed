@@ -1,11 +1,9 @@
-/**
- * Checkout Page Component
- *
- * This component renders the checkout page where users can review their cart items,
- * see the total price, and modify quantities or remove items.
- *
- * The component connects to Redux store to access cart items and total price.
- */
+// Checkout Page Component
+//
+// This component renders the checkout page where users can review their cart items,
+// see the total price, and modify quantities or remove items.
+//
+// The component connects to Redux store to access cart items and total price.
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux'; // For connecting component to Redux store
 import { createStructuredSelector } from 'reselect'; // Utility for creating structured selectors
@@ -25,19 +23,15 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 // Styles for the checkout page
 import './checkout.styles.scss';
 
-/**
- * Structure for the state props from Redux
- */
+// Structure for the state props from Redux
 interface CheckoutPageStateProps {
   cartItems: CartItem[];
   total: number;
 }
 
-/**
- * Uses createStructuredSelector to select multiple pieces of state from Redux store:
- * - cartItems: All items currently in the cart
- * - total: The total price of all items in the cart
- */
+// Uses createStructuredSelector to select multiple pieces of state from Redux store:
+// - cartItems: All items currently in the cart
+// - total: The total price of all items in the cart
 const mapStateToProps = createStructuredSelector<
   RootState,
   CheckoutPageStateProps
