@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect, useState } from 'react';
+import { FC, useRef, useEffect, useState, useMemo } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 // Import the mapbox styles and component styles
@@ -14,14 +14,14 @@ const ContactMap: FC = () => {
   // Reference to the container DOM element
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // Default map coordinates (Seattle area)
-  const INITIAL_CENTER: [number, number] = [-122.3493, 47.6205];
-  // Default zoom level
-  const INITIAL_ZOOM = 10.12;
+  // Default map coordinates (Seattle area) - memoized to prevent recreation
+  const INITIAL_CENTER = useMemo<[number, number]>(() => [-122.3493, 47.6205], []);
+  // Default zoom level - no need to memoize primitive values, but doing so for consistency
+  const INITIAL_ZOOM = useMemo(() => 10.12, []);
 
-  // State to track current map center coordinates
+  // State to track current map center coordinates - initialized with memoized values
   const [center, setCenter] = useState<[number, number]>(INITIAL_CENTER);
-  // State to track current map zoom level
+  // State to track current map zoom level - initialized with memoized value
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
 
   // Handler for reset button - returns map to initial position
@@ -67,7 +67,7 @@ const ContactMap: FC = () => {
         mapRef.current.remove();
       }
     };
-  }, []); // Empty dependency array as we want it to run only once
+  }, [INITIAL_CENTER, INITIAL_ZOOM]); // Added constants to satisfy ESLint
 
   return (
     <div className="contact-map">
