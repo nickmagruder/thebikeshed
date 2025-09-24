@@ -32,18 +32,19 @@ const ContactMap: FC = () => {
     });
   };
 
-  // Initialize map on component mount
+  // Initialize map on component mount - runs only once
   useEffect(() => {
     // Get Mapbox access token from environment variables
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
     // Initialize map if container is available
     if (mapContainerRef.current) {
+      // Create the map with initial values
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: 'mapbox://styles/mapbox/dark-v11', // Dark theme map style
-        center: center,
-        zoom: zoom,
+        center: INITIAL_CENTER, // Use constant instead of state
+        zoom: INITIAL_ZOOM, // Use constant instead of state
       });
     }
 
@@ -66,7 +67,7 @@ const ContactMap: FC = () => {
         mapRef.current.remove();
       }
     };
-  }, []);
+  }, []); // Empty dependency array as we want it to run only once
 
   return (
     <div className="contact-map">
