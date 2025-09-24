@@ -12,9 +12,7 @@ interface SignInFormState {
   password: string;
 }
 
-/**
- * Functional SignIn component - Handles user authentication with email/password or Google
- */
+// Functional SignIn component - Handles user authentication with email/password or Google
 const SignIn: React.FC = () => {
   // State hook for form fields
   const [formState, setFormState] = useState<SignInFormState>({
