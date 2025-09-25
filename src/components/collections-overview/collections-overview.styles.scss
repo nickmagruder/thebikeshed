@@ -1,4 +1,14 @@
 .collections-overview {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  
+  @media screen and (min-width: 768px) {
+    gap: 30px;
+  }
+  
+  @media screen and (min-width: 1024px) {
+    gap: 40px;
+  }
 }

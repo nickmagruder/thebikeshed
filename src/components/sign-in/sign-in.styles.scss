@@ -1,14 +1,42 @@
 .sign-in {
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
+  
+  /* Tablet styles */
+  @media screen and (min-width: 768px) {
+    width: 380px;
+  }
 
   .title {
     margin: 10px 0;
+    font-size: 20px;
+    
+    @media screen and (min-width: 768px) {
+      font-size: 22px;
+    }
   }
 
   .buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    
+    /* Tablet and above */
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    
+    /* Ensure buttons take up equal space on mobile */
+    button {
+      width: 100%;
+      
+      @media screen and (min-width: 768px) {
+        width: auto;
+      }
+    }
   }
 }
