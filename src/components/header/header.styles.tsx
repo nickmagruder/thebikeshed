@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 // Main container for the header
 export const HeaderContainer = styled.div`
-  height: 70px;
+  height: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 15px; /* Reduced from 25px to help fit content in viewport */
 `;
 
 // Container for the logo with Link functionality

@@ -1,13 +1,45 @@
+/* Base mobile-first styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
 body {
   font-family: "Open Sans Condensed", sans-serif;
-  padding: 20px 60px;
+  padding: 10px 15px; /* Smaller padding for mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   text-decoration: none;
   color: black;
+  touch-action: manipulation; /* Better touch handling */
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Responsive typography */
+html {
+  font-size: 16px; /* Base font size */
+}
+
+/* Add viewport meta tag in your public/index.html if not present:
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
+/* Tablet styles */
+@media screen and (min-width: 768px) {
+  body {
+    padding: 0 40px; /* Removed top/bottom padding */
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 1024px) {
+  body {
+    padding: 0 60px; /* Removed top/bottom padding, kept horizontal padding */
+  }
 }

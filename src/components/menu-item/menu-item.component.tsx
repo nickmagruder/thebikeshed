@@ -17,6 +17,8 @@ const MenuItem: FC<MenuItemProps> = ({ title, imageUrl, size, linkUrl }) => {
   // Use React Router hooks for navigation
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log(title, size)
   
   return (
     <div
