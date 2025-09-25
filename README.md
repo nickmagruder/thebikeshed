@@ -8,7 +8,7 @@ This project's packages have been updated to stable compatible versions as of Se
 - React Router 6 (from v5)
 - React-Redux 8 (from v7)
 - Firebase 10 (from v9)
-- Styled-Components 6 (from v5)
+- Styled-Components Removed
 - Sass (replacing deprecated node-sass)
 - Node 24 (from 20)
 - npm 11 (from 10)
@@ -66,6 +66,12 @@ npm start
   - Adjusted menu-item components for better mobile experience
   - Implemented flexible height calculations based on viewport
   - Created 3-column grid layout for tablet/desktop with 2-per-row large items
+- 9/24 - Removed styled-components in favor of SCSS:
+  - Converted homepage.styles.tsx, with-spinner.styles.tsx, and custom-button.styles.tsx to SCSS
+  - Simplified component architecture by using className-based styling
+  - Fixed image path references for proper rendering
+  - Improved TypeScript typing for component props after migration
+  - Enhanced maintainability with clearer separation of concerns between markup and styles
 
 ## 9/10 Package Update Summary
 We have successfully updated and migrated the ecommerce application to use newer package versions. Here's a summary of the changes made:

@@ -8,8 +8,11 @@ interface ShopPageOutletContext {
   loading: boolean;
 }
 
-// Using Record<string, string> for params instead of a specific interface
-// as it's more compatible with the useParams hook in React Router v6
+// Define the props type for the wrapped component
+// This ensures TypeScript knows about the collectionId prop
+interface CollectionPageContainerProps {
+  collectionId: string;
+}
 
 // CollectionPageWithOutletContext - Component that accesses loading state from outlet context
 // and passes URL parameters to the collection page component
@@ -23,8 +26,8 @@ const CollectionPageWithOutletContext: FC = () => {
   const params = useParams<Record<string, string>>();
   const collectionId = params.collectionId || '';
 
-  // Apply the HOC to our component
-  const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+  // Apply the HOC to our component with explicit typing
+  const CollectionPageWithSpinner = WithSpinner<CollectionPageContainerProps>(CollectionPage);
 
   return (
     <CollectionPageWithSpinner

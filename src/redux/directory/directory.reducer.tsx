@@ -7,32 +7,32 @@ const INITIAL_STATE: DirectoryState = {
   sections: [
     {
       title: 'bags',
-      imageUrl: 'images/bags.png',
+      imageUrl: '/images/bags.png',
       id: 1,
       linkUrl: 'shop/bags',
     },
     {
       title: 'apparel',
-      imageUrl: 'images/apparel.jpg',
+      imageUrl: '/images/apparel.jpg',
       id: 2,
       linkUrl: 'shop/apparel',
     },
     {
       title: 'accessories',
-      imageUrl: 'images/accessories.png',
+      imageUrl: '/images/accessories.png',
       id: 3,
       linkUrl: 'shop/accessories',
     },
     {
       title: 'city',
-      imageUrl: 'images/city.png',
+      imageUrl: '/images/city.png',
       size: 'large',
       id: 4,
       linkUrl: 'shop/city',
     },
     {
       title: 'adventure',
-      imageUrl: 'images/adventure.png',
+      imageUrl: '/images/adventure.png',
       size: 'large',
       id: 5,
       linkUrl: 'shop/adventure',

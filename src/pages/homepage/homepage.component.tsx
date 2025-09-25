@@ -7,18 +7,18 @@ import { FC } from 'react';
 // Component that renders the menu of product categories
 import Directory from '../../components/directory/directory.component';
 
-// Styled component for the homepage container
-import { HomePageContainer } from './homepage.styles';
+// Import SCSS styles
+import './homepage.styles.scss';
 
 // HomePage component
 //
 // A simple functional component that renders the Directory component
-// inside a styled container.
+// inside a container with SCSS styling.
 const HomePage: FC = () => (
-  <HomePageContainer>
+  <div className="homepage-container">
     {/* Directory component displaying category menu items */}
     <Directory />
-  </HomePageContainer>
+  </div>
 );
 
 export default HomePage;

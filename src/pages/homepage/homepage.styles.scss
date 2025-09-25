@@ -1,12 +1,4 @@
-import styled from 'styled-components';
-
-/**
- * Styled container for the homepage
- * Implements mobile-first approach with responsive padding
- * and maintains flex layout with centered content
- * On tablet and desktop, it fills approximately 95vh of the viewport
- */
-export const HomePageContainer = styled.div`
+.homepage-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,4 +22,4 @@ export const HomePageContainer = styled.div`
     padding: 0px 80px; /* Horizontal padding only */
     height: 95vh;
   }
-`;
+}
