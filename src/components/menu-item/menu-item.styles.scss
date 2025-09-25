@@ -1,14 +1,15 @@
 .menu-item {
-  min-width: 30%;
-  height: 240px;
-  flex: 1 1 auto;
+  width: 100%; /* Mobile-first: full width for small screens */
+  height: 200px; /* Shorter height for mobile */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 7.5px 15px;
   overflow: hidden;
-
-  &:hover {
+  position: relative;
+  border-radius: 4px; /* Slightly rounded corners for modern look */
+  
+  /* Touch-friendly hover effects */
+  &:active, &:hover {
     cursor: pointer;
 
     & .background-image {
@@ -21,16 +22,14 @@
     }
   }
 
+  /* On mobile, all items have the same height regardless of size class */
   &.large {
-    height: 380px;
+    height: 200px; /* Same height as regular items on mobile */
   }
-
-  &:first-child {
-    margin-right: 7.5px;
-  }
-
-  &:last-child {
-    margin-left: 7.5px;
+  
+  /* Remove margins since we're using gap in the parent */
+  &:first-child, &:last-child {
+    margin: 0;
   }
 
   .background-image {
@@ -41,8 +40,9 @@
   }
 
   .content {
-    height: 90px;
-    padding: 0 25px;
+    height: auto; /* Let content determine its height */
+    min-height: 80px;
+    padding: 10px 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,17 +50,68 @@
     background-color: white;
     opacity: 0.7;
     position: absolute;
+    border-radius: 2px;
 
     .title {
       font-weight: bold;
-      margin-bottom: 6px;
-      font-size: 22px;
+      margin-bottom: 4px;
+      font-size: 18px; /* Smaller font size for mobile */
       color: #4a4a4a;
+      text-align: center;
     }
 
     .subtitle {
       font-weight: lighter;
-      font-size: 16px;
+      font-size: 14px; /* Smaller font size for mobile */
+      text-align: center;
+    }
+  }
+  
+  /* Tablet breakpoint */
+  @media screen and (min-width: 768px) {
+    width: calc((100% - 20px) / 3); /* 3 items per row with 10px gap consideration */
+    height: calc((85vh - 140px) / 2); /* Adjusted to 85vh with smaller gap */
+    
+    &.large {
+      width: calc((100% - 10px) / 2); /* 2 large items per row with 10px gap */
+      height: calc((85vh - 140px) / 1.5); /* Adjusted height for large items */
+    }
+    
+    .content {
+      padding: 0 20px;
+      
+      .title {
+        font-size: 20px;
+      }
+      
+      .subtitle {
+        font-size: 15px;
+      }
+    }
+  }
+  
+  /* Desktop breakpoint */
+  @media screen and (min-width: 1024px) {
+    width: calc((100% - 20px) / 3); /* 3 items per row with 10px gap consideration */
+    height: calc((85vh - 140px) / 2); /* Adjusted to 85vh with smaller gap */
+    
+    &.large {
+      width: calc((100% - 10px) / 2); /* 2 large items per row with 10px gap */
+      height: calc((85vh - 140px) / 1.5); /* Adjusted height for large items */
+    }
+    
+    .content {
+      height: 90px;
+      padding: 0 25px;
+      
+      .title {
+        font-size: 22px; /* Original desktop font size */
+        margin-bottom: 6px;
+      }
+      
+      .subtitle {
+        font-size: 16px; /* Original desktop font size */
+      }
     }
   }
 }

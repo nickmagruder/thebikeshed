@@ -2,11 +2,32 @@ import styled from 'styled-components';
 
 /**
  * Styled container for the homepage
- * Applies flex layout with centered content and padding
+ * Implements mobile-first approach with responsive padding
+ * and maintains flex layout with centered content
+ * On tablet and desktop, it fills approximately 95vh of the viewport
  */
 export const HomePageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 80px;
+  padding: 10px 15px; /* Mobile-first smaller padding */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+
+  /* Breakpoints for larger devices */
+  @media screen and (min-width: 480px) {
+    padding: 0px 25px; /* Slightly larger padding for small tablets */
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 0px 40px; /* Horizontal padding only */
+    height: 85vh;
+    justify-content: flex-start; /* Align content to the top */
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 0px 80px; /* Horizontal padding only */
+    height: 95vh;
+  }
 `;

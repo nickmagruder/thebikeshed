@@ -1,0 +1,88 @@
+.header-container {
+  height: 30px; /* Matching the modified height from styled-components */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  
+  /* Mobile-first approach */
+  @media screen and (max-width: 767px) {
+    height: 10vh;
+    margin-bottom: 0; /* Removed bottom margin for mobile */
+  }
+  
+  /* Tablet styling */
+  @media screen and (min-width: 768px) {
+    height: 10vh;
+    margin-bottom: 5px; /* Reduced margin for tablet */
+  }
+  
+  /* Desktop styling */
+  @media screen and (min-width: 1024px) {
+    height: 10vh;
+    margin-bottom: 5px; /* Reduced margin for desktop */
+  }
+
+  .logo-container {
+    height: 100%;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    
+    @media screen and (min-width: 768px) {
+      padding: 10px;
+      width: 120px;
+    }
+    
+    @media screen and (min-width: 1024px) {
+      padding: 15px;
+      width: 150px;
+    }
+    
+    .logo {
+      height: 100%;
+      width: auto;
+    }
+  }
+  
+  .options-container {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+    @media screen and (min-width: 768px) {
+      width: 70%;
+    }
+    
+    @media screen and (min-width: 1024px) {
+      width: 50%;
+    }
+    
+    .option-link {
+      padding: 5px 10px;
+      cursor: pointer;
+      
+      /* Style for button element used for Sign Out */
+      &:is(button) {
+        background: none;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        color: black;
+        text-transform: uppercase;
+        font-weight: inherit;
+      }
+      
+      @media screen and (min-width: 768px) {
+        padding: 8px 12px;
+      }
+      
+      @media screen and (min-width: 1024px) {
+        padding: 10px 15px;
+      }
+    }
+  }
+}

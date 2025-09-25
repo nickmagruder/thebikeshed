@@ -1,6 +1,18 @@
 .directory-menu {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column; /* Mobile-first: stack items vertically */
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 15px; /* Consistent spacing between items */
+  
+  /* Tablet and up: switch to wrapped grid-like layout with 3 items per row */
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px; /* Slightly reduced gap */
+    height: calc(85vh - 10vh - 15px); /* Adjusted: 85vh minus header height (10vh) minus minimal gap (5px) and padding */
+    align-content: flex-start; /* Items start from the top */
+    margin-top: 0; /* Ensure no extra margin at top */
+  }
 }

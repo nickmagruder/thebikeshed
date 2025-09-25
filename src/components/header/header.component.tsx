@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/bike.svg';
 import { auth } from '../../firebase/firebase.utils';
@@ -12,37 +13,32 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import {
-  HeaderContainer,
-  LogoContainer,
-  OptionsContainer,
-  OptionLink,
-} from './header.styles';
+import "./header.styles.scss";
 
 // Props received from Redux connect
 type HeaderProps = ConnectedProps<typeof connector>;
 
 // Header component - displays the top navigation bar with logo, links and cart icon
 const Header: FC<HeaderProps> = ({ currentUser, hidden }) => (
-  <HeaderContainer>
-    <LogoContainer to="/">
+  <div className="header-container">
+    <Link className="logo-container" to="/">
       <Logo className="logo" />
-    </LogoContainer>
+    </Link>
 
-    <OptionsContainer>
-      <OptionLink to="/shop">SHOP</OptionLink>
-      <OptionLink to="/contact">CONTACT</OptionLink>
+    <div className="options-container">
+      <Link className="option-link" to="/shop">SHOP</Link>
+      <Link className="option-link" to="/contact">CONTACT</Link>
       {currentUser ? (
-        <OptionLink to="#" onClick={() => auth.signOut()}>
+        <button className="option-link" onClick={() => auth.signOut()}>
           SIGN OUT
-        </OptionLink>
+        </button>
       ) : (
-        <OptionLink to="/signin">SIGN IN</OptionLink>
+        <Link className="option-link" to="/signin">SIGN IN</Link>
       )}
       <CartIcon />
-    </OptionsContainer>
+    </div>
     {hidden ? null : <CartDropdown />}
-  </HeaderContainer>
+  </div>
 );
 
 // Maps Redux state to component props using reselect
