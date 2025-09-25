@@ -1,9 +1,30 @@
 .sign-up {
+  width: 100%;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
-  width: 380px;
+  
+  /* Tablet styles */
+  @media screen and (min-width: 768px) {
+    width: 380px;
+  }
 
   .title {
     margin: 10px 0;
+    font-size: 20px;
+    
+    @media screen and (min-width: 768px) {
+      font-size: 22px;
+    }
+  }
+  
+  button {
+    width: 100%;
+    margin-top: 10px;
+    
+    @media screen and (min-width: 768px) {
+      width: auto;
+      align-self: flex-start;
+    }
   }
 }
