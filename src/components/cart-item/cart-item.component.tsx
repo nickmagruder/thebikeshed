@@ -11,7 +11,7 @@ interface CartItemProps {
 // CartItem component - displays individual cart items in the cart dropdown
 // Memoized to prevent unnecessary re-renders when cart items change
 const CartItem: FC<CartItemProps> = ({
-  item: { imageUrl, price, name, quantity },
+  item: { imageUrl, price, name, quantity }
 }) => (
   <div className="cart-item">
     <img src={imageUrl} alt={name} />

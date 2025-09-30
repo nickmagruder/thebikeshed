@@ -13,14 +13,22 @@ interface CollectionPreviewProps {
 }
 
 // CollectionPreview component - displays a preview of items in a collection
-const CollectionPreview: FC<CollectionPreviewProps> = ({ title, items }) => (
+const CollectionPreview: FC<CollectionPreviewProps> = ({
+  title,
+  items,
+  routeName
+}) => (
   <div className="collection-preview">
     <h1 className="title">{title.toUpperCase()}</h1>
     <div className="preview">
       {items
         .filter((item, idx) => idx < 4)
         .map((item) => (
-          <CollectionItem key={item.id} item={item} />
+          <CollectionItem
+            key={item.id}
+            item={item}
+            collectionId={routeName || title.toLowerCase()}
+          />
         ))}
     </div>
   </div>

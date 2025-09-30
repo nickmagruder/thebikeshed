@@ -24,7 +24,7 @@ const CartIcon: FC<CartIconProps> = ({ toggleCartHidden, itemCount }) => (
 
 // Maps dispatch actions to component props
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleCartHidden: () => dispatch(toggleCartHidden() as any),
+  toggleCartHidden: () => dispatch(toggleCartHidden() as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 });
 
 // Maps Redux state to component props using reselect
@@ -34,7 +34,7 @@ const mapStateToProps = createStructuredSelector<
     itemCount: number;
   }
 >({
-  itemCount: selectCartItemsCount,
+  itemCount: selectCartItemsCount
 });
 
 // Create connector
