@@ -1,20 +1,23 @@
 .collection-item {
-  width: 100%; /* Mobile: Full width (1 per row) */
+  width: 100%;
+  /* Mobile: Full width (1 per row) */
   display: flex;
   flex-direction: column;
   height: 300px;
   align-items: center;
   position: relative;
-  
+
   /* Tablet: 3 items per row */
   @media screen and (min-width: 768px) {
-    width: calc((100% - 30px) / 3); /* 3 items per row with 15px gap */
+    width: calc((100% - 30px) / 3);
+    /* 3 items per row with 15px gap */
     height: 320px;
   }
-  
+
   /* Desktop: 4 items per row */
   @media screen and (min-width: 1024px) {
-    width: calc((100% - 60px) / 4); /* 4 items per row with 20px gap */
+    width: calc((100% - 60px) / 4);
+    /* 4 items per row with 20px gap */
     height: 350px;
   }
 
@@ -24,11 +27,13 @@
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
-    
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
     @media screen and (min-width: 768px) {
       height: 90%;
     }
-    
+
     @media screen and (min-width: 1024px) {
       height: 95%;
     }
@@ -39,14 +44,16 @@
     opacity: 0.9;
     position: absolute;
     top: 210px;
-    display: flex; /* Always show button on mobile for better touch UX */
-    
+    display: flex;
+    /* Always show button on mobile for better touch UX */
+
     @media screen and (min-width: 768px) {
       top: 230px;
       opacity: 0.7;
-      display: none; /* Hide on non-mobile until hover */
+      display: none;
+      /* Hide on non-mobile until hover */
     }
-    
+
     @media screen and (min-width: 1024px) {
       top: 255px;
     }
@@ -72,12 +79,12 @@
     display: flex;
     justify-content: space-between;
     font-size: 16px;
-    
+
     @media screen and (min-width: 768px) {
       height: 10%;
       font-size: 17px;
     }
-    
+
     @media screen and (min-width: 1024px) {
       height: 5%;
       font-size: 18px;
@@ -86,12 +93,12 @@
     .name {
       width: 85%;
       margin-bottom: 5px;
-      
+
       @media screen and (min-width: 768px) {
         width: 87%;
         margin-bottom: 10px;
       }
-      
+
       @media screen and (min-width: 1024px) {
         width: 90%;
         margin-bottom: 15px;
@@ -100,11 +107,11 @@
 
     .price {
       width: 15%;
-      
+
       @media screen and (min-width: 768px) {
         width: 13%;
       }
-      
+
       @media screen and (min-width: 1024px) {
         width: 10%;
       }

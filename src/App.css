@@ -1,12 +1,13 @@
 /* Base mobile-first styles */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
 
 body {
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   padding: 10px 15px; /* Smaller padding for mobile */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,7 +25,7 @@ a {
 
 /* Responsive typography */
 html {
-  font-size: 16px; /* Base font size */
+  font-size: 16px;
 }
 
 /* Add viewport meta tag in your public/index.html if not present:
@@ -33,13 +34,13 @@ html {
 /* Tablet styles */
 @media screen and (min-width: 768px) {
   body {
-    padding: 0 40px; /* Removed top/bottom padding */
+    padding: 0 40px;
   }
 }
 
 /* Desktop styles */
 @media screen and (min-width: 1024px) {
   body {
-    padding: 0 60px; /* Removed top/bottom padding, kept horizontal padding */
+    padding: 0 60px;
   }
 }

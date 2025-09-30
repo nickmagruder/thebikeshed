@@ -15,12 +15,11 @@ import { useAppDispatch } from './types/hooks';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
-
 // Main application component using functional component pattern with hooks
-const App: React.FC = () => {  
+const App: React.FC = () => {
   // Get the dispatch function to update Redux state
   const dispatch = useAppDispatch();
-  
+
   // Use a ref to store the unsubscribe function
   const unsubscribeFromAuthRef = useRef<(() => void) | null>(null);
 
@@ -28,25 +27,29 @@ const App: React.FC = () => {
   // Replaces componentDidMount and componentWillUnmount
   useEffect(() => {
     // Subscribe to Firebase auth state changes
-    unsubscribeFromAuthRef.current = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    unsubscribeFromAuthRef.current = auth.onAuthStateChanged(
+      async (userAuth) => {
+        if (userAuth) {
+          const userRef = await createUserProfileDocument(userAuth);
 
-        if (userRef) {
-          userRef.onSnapshot((snapShot: FirebaseSnapshot) => {
-            const data = (snapShot.data() || {}) as Partial<User>;
-            dispatch(setCurrentUser({
-              id: snapShot.id,
-              email: data.email ?? '',
-              createdAt: data.createdAt ?? new Date(0),
-              ...data,
-            }));
-          });
+          if (userRef) {
+            userRef.onSnapshot((snapShot: FirebaseSnapshot) => {
+              const data = (snapShot.data() || {}) as Partial<User>;
+              dispatch(
+                setCurrentUser({
+                  id: snapShot.id,
+                  email: data.email ?? '',
+                  createdAt: data.createdAt ?? new Date(0),
+                  ...data
+                })
+              );
+            });
+          }
         }
-      }
 
-      dispatch(setCurrentUser(userAuth as User | null));
-    });
+        dispatch(setCurrentUser(userAuth as User | null));
+      }
+    );
 
     // Cleanup function (replaces componentWillUnmount)
     return () => {

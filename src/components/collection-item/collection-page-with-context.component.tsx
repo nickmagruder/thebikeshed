@@ -19,7 +19,7 @@ interface CollectionPageContainerProps {
 const CollectionPageWithOutletContext: FC = () => {
   // Use the outlet context with proper typing, provide fallback default
   const { loading } = useOutletContext<ShopPageOutletContext>() || {
-    loading: true,
+    loading: true
   };
 
   // Get URL parameters with proper typing
@@ -27,7 +27,8 @@ const CollectionPageWithOutletContext: FC = () => {
   const collectionId = params.collectionId || '';
 
   // Apply the HOC to our component with explicit typing
-  const CollectionPageWithSpinner = WithSpinner<CollectionPageContainerProps>(CollectionPage);
+  const CollectionPageWithSpinner =
+    WithSpinner<CollectionPageContainerProps>(CollectionPage);
 
   return (
     <CollectionPageWithSpinner

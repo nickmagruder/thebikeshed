@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import {
   RouterProvider,
   createBrowserRouter,
-  LoaderFunction,
+  LoaderFunction
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -19,6 +19,7 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import SignInAndSignUpPage from './pages/sign-in-and-up/sign-in-and-up.component';
 import CollectionsOverviewWithOutletContext from './components/collections-overview/collections-overview-with-context.component';
 import CollectionPageWithOutletContext from './components/collection-item/collection-page-with-context.component';
+import DetailPage from './pages/detail/detail.component';
 import Contact from './pages/contact/contact.component';
 
 import './index.css';
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomePage />
       },
       {
         path: 'shop',
@@ -70,29 +71,33 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <CollectionsOverviewWithOutletContext />,
+            element: <CollectionsOverviewWithOutletContext />
           },
           {
             path: ':collectionId',
-            element: <CollectionPageWithOutletContext />,
+            element: <CollectionPageWithOutletContext />
           },
-        ],
+          {
+            path: ':collectionId/:itemId',
+            element: <DetailPage />
+          }
+        ]
       },
       {
         path: 'checkout',
-        element: <CheckoutPage />,
+        element: <CheckoutPage />
       },
       {
         path: 'contact',
-        element: <Contact />,
+        element: <Contact />
       },
       {
         path: 'signin',
         loader: signInLoader as LoaderFunction,
-        element: <SignInAndSignUpPage />,
-      },
-    ],
-  },
+        element: <SignInAndSignUpPage />
+      }
+    ]
+  }
 ]);
 
 // Mount the router to the root DOM node
