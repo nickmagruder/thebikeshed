@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom'; // For accessing URL parameters
 import { RootState } from '../../types/redux.types';
 import {
   Collection,
-  CollectionItem as CollectionItemType,
+  CollectionItem as CollectionItemType
 } from '../../redux/shop/shop.types';
 
 // Component that renders individual product items
@@ -29,6 +29,10 @@ interface CollectionPageProps {
 
 // CollectionPage component
 const CollectionPage: FC<CollectionPageProps> = ({ collection }) => {
+  // Get URL parameters to access collectionId
+  const params = useParams<Record<string, string>>();
+  const collectionId = params.collectionId || '';
+
   // Destructure the title and items from the collection object
   const { title, items } = collection;
   return (
@@ -40,7 +44,11 @@ const CollectionPage: FC<CollectionPageProps> = ({ collection }) => {
         {
           // Map through collection items and render a CollectionItem component for each
           items.map((item: CollectionItemType) => (
-            <CollectionItem key={item.id} item={item} />
+            <CollectionItem
+              key={item.id}
+              item={item}
+              collectionId={collectionId}
+            />
           ))
         }
       </div>
@@ -80,7 +88,7 @@ interface OwnProps {
 const mapStateToProps = (state: RootState, ownProps: OwnProps) => ({
   // selectCollection returns a curried function that takes the state as a parameter
   // collectionId comes from the wrapper component
-  collection: selectCollection(ownProps.collectionId)(state),
+  collection: selectCollection(ownProps.collectionId)(state)
 });
 
 // Create the connector
