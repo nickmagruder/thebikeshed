@@ -66,12 +66,6 @@ const DetailPage: FC = () => {
               Perfect for any occasion, this piece combines style and comfort to create 
               a timeless addition to your wardrobe.
             </p>
-            <ul className="product-features">
-              <li>High-quality materials</li>
-              <li>Comfortable fit</li>
-              <li>Durable construction</li>
-              <li>Easy care instructions</li>
-            </ul>
           </div>
 
           {/* Size Selection (for clothing items) */}
