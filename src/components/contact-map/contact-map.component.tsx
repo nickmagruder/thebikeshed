@@ -22,10 +22,88 @@ const ContactMap: FC = () => {
   // Default zoom level - no need to memoize primitive values, but doing so for consistency
   const INITIAL_ZOOM = useMemo(() => 15, []);
 
-  // State to track current map center coordinates - initialized with memoized values
-  const [center, setCenter] = useState<[number, number]>(INITIAL_CENTER);
-  // State to track current map zoom level - initialized with memoized value
-  const [zoom, setZoom] = useState(INITIAL_ZOOM);
+  // State for directions functionality
+  const [startAddress, setStartAddress] = useState('');
+  const [isLoadingDirections, setIsLoadingDirections] = useState(false);
+
+  // Handler for getting directions
+  const handleGetDirections = async () => {
+    if (!startAddress.trim() || !mapRef.current) return;
+
+    setIsLoadingDirections(true);
+
+    try {
+      // Geocode the start address
+      const geocodeResponse = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          startAddress
+        )}.json?access_token=${mapboxgl.accessToken}&limit=1`
+      );
+      const geocodeData = await geocodeResponse.json();
+
+      if (geocodeData.features && geocodeData.features.length > 0) {
+        const startCoords = geocodeData.features[0].center;
+        const endCoords = [-122.349121, 47.620506]; // 400 Broad St coordinates
+
+        // Get directions
+        const directionsResponse = await fetch(
+          `https://api.mapbox.com/directions/v5/mapbox/cycling/${startCoords[0]},${startCoords[1]};${endCoords[0]},${endCoords[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+        );
+        const directionsData = await directionsResponse.json();
+
+        if (directionsData.routes && directionsData.routes.length > 0) {
+          const route = directionsData.routes[0];
+
+          // Remove existing route if any
+          if (mapRef.current.getSource('route')) {
+            mapRef.current.removeLayer('route');
+            mapRef.current.removeSource('route');
+          }
+
+          // Add the route to the map
+          mapRef.current.addSource('route', {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              properties: {},
+              geometry: route.geometry
+            }
+          });
+
+          mapRef.current.addLayer({
+            id: 'route',
+            type: 'line',
+            source: 'route',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#2c5aa0',
+              'line-width': 4
+            }
+          });
+
+          // Fit the map to show the entire route
+          const coordinates = route.geometry.coordinates;
+          const bounds = coordinates.reduce(
+            (bounds: mapboxgl.LngLatBounds, coord: [number, number]) => {
+              return bounds.extend(coord);
+            },
+            new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
+          );
+
+          mapRef.current.fitBounds(bounds, {
+            padding: 50
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error getting directions:', error);
+    } finally {
+      setIsLoadingDirections(false);
+    }
+  };
 
   // Initialize map on component mount - runs only once
   useEffect(() => {
@@ -73,19 +151,6 @@ const ContactMap: FC = () => {
       });
     }
 
-    // Add move event listener to update coordinates and zoom in state
-    if (mapRef.current) {
-      mapRef.current.on('move', () => {
-        // Get current center coordinates and zoom level from the map
-        const mapCenter = mapRef.current!.getCenter();
-        const mapZoom = mapRef.current!.getZoom();
-
-        // Update state with new values
-        setCenter([mapCenter.lng, mapCenter.lat]);
-        setZoom(mapZoom);
-      });
-    }
-
     // Cleanup function to remove map on unmount
     return () => {
       if (mapRef.current) {
@@ -97,13 +162,28 @@ const ContactMap: FC = () => {
   return (
     <div className="contact-map">
       <div className="map-wrapper">
+        {/* Directions input panel */}
+        <div className="directions-panel">
+          <div className="directions-input">
+            <input
+              type="text"
+              placeholder="Enter starting address..."
+              value={startAddress}
+              onChange={(e) => setStartAddress(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleGetDirections()}
+              disabled={isLoadingDirections}
+            />
+            <button
+              onClick={handleGetDirections}
+              disabled={!startAddress.trim() || isLoadingDirections}
+              className="directions-button"
+            >
+              {isLoadingDirections ? 'Loading...' : 'Get Directions'}
+            </button>
+          </div>
+        </div>
         {/* Map container element */}
         <div id="map-container" ref={mapContainerRef} />
-        {/* Display current coordinates - using the center state */}
-        <div className="map-coordinates">
-          Longitude: {center[0].toFixed(4)}, Latitude: {center[1].toFixed(4)},
-          Zoom: {zoom.toFixed(2)}
-        </div>
       </div>
       {/* Address and phone information sidebar */}
       <div className="info-sidebar">
